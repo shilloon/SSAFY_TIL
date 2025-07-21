@@ -1,0 +1,42 @@
+T = int(input())
+
+for t in range(T):
+
+    arr = [list(map(int, input().split())) for _ in range(9)]
+
+    result = 1
+
+    for i in range(9):
+        numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+        for j in range(9):
+
+            if numarr[arr[i][j]] == 0:
+                numarr[arr[i][j]] += 1
+            else :
+                result = 0
+
+    for i in range(9):
+        numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+        for j in range(9):
+
+            if numarr[arr[j][i]] == 0:
+                numarr[arr[j][i]] += 1
+            else :
+                result = 0
+
+    for i in range(0, 9, 3):
+
+        for j in range(0, 9, 3):
+            numarr = [0 for i in range(10)]
+
+            for k in range(i, i+3):
+                for z in range(j, j+3):
+                    if numarr[arr[k][z]] == 0:
+                        numarr[arr[k][z]] += 1
+                    else :
+                        result = 0
+
+
+    print('#{} {}'.format(t+1, result))
