@@ -1,0 +1,17 @@
+T = int(input())
+
+for t in range(T):
+
+    N = int(input())
+
+    arr = list(map(int, input().split()))
+
+    V_max = arr[0]
+    V_min = arr[0]
+
+
+    for i in range(N):
+        V_max = max(V_max, arr[i])
+        V_min = min(V_min, arr[i])
+
+    print('#{} {}'.format(t+1, V_max-V_min))
