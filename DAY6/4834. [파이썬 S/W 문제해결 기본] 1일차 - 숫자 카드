@@ -1,0 +1,29 @@
+T = int(input())
+
+for t in range(T):
+
+    N = int(input())
+
+    CardNum = input()
+
+    Count = [0 for i in range(10)]
+
+    NumMax = 0
+    CardMax = 0
+
+    for i in range(N):
+        for j in range(10):
+            if int(CardNum[i]) == j:
+                Count[j] += 1
+
+
+    for i in range(10):
+        if NumMax <= Count[i]:
+            NumMax = Count[i]
+            if NumMax == Count[i]:
+                CardMax = i
+            else:
+                CardMax = i
+
+
+    print('#{} {} {}'.format(t+1, CardMax, NumMax))
