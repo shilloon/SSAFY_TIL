@@ -1,0 +1,29 @@
+T = int(input())
+
+for t in range(T):
+
+    K, N, M = map(int, input().split())
+
+    BST = list(map(int, input().split()))
+    BST.append(N)
+
+    Charge = 0
+    Dist = 0
+
+    while Dist + K < N:
+
+        next_Charge = -1
+
+        for i in reversed(BST):
+            if Dist < i <= Dist + K:
+                next_Charge = i
+                break
+
+        if next_Charge == -1:
+            Charge = 0
+            break
+        else:
+            Dist = next_Charge
+            Charge += 1
+
+    print('#{} {}'.format(t+1, Charge))
