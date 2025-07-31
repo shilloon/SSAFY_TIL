@@ -1,0 +1,70 @@
+# This is a sample Python script.
+
+# Press Shift+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+
+T = int(input())
+
+for t in range(T):
+
+    N, M, K = map(int, input().split())
+
+    microdata = []
+
+    # 방향 설정 0은 더미 값
+    dy = [0, -1, 1, 0, 0]
+    dx = [0, 0, 0, -1, 1]
+
+    change_dir = [0, 2, 1, 4, 3]
+
+    for i in range(K):
+        col, row, micro, move = map(int, input().split())
+        microdata.append([col, row, micro, move])
+
+    for _ in range(M):
+        # 군집이 없을 시 조기 종료
+        if not microdata:
+            break
+
+        merged_map = {}
+
+        # 군집을 한 칸씩 이동 시키고, 같은 위치 병합
+        for y, x, size, direction in microdata:
+            ny = y + dy[direction]
+            nx = x + dx[direction]
+            pos = (ny, nx)
+
+            if pos not in merged_map:
+                merged_map[pos] = [size, size, direction]
+
+            else:
+                merged_map[pos][0] += size
+
+                # 현재 도착한 군집의 수 > 기존 군집의 수
+                if size > merged_map[pos][1]:
+                    merged_map[pos][1] = size
+                    merged_map[pos][2] = direction
+
+        new_microdata = []
+
+        # 병합된 결과를 바탕으로 경계 처리, 다음 세대 군집 생성
+        for pos, data in merged_map.items():
+            ny, nx = pos
+            total_size, _, direction = data
+
+            # 경계에 닿았을 경우
+            if ny == 0 or ny == N - 1 or nx == 0 or nx == N - 1:
+                total_size //= 2
+                direction = change_dir[direction]
+
+            if total_size > 0:
+                new_microdata.append([ny, nx, total_size, direction])
+
+        microdata = new_microdata
+
+    # M 시간 후 남아있는 총 미생물 수
+    total_remaining_size = 0
+    for data in microdata:
+        total_remaining_size += data[2]
+
+    print(f'#{t+1} {total_remaining_size}')
