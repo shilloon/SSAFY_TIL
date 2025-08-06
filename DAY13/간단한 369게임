@@ -1,0 +1,24 @@
+N = int(input())
+
+for i in range(1, N+1):
+
+    storage = []
+
+    num_str = str(i)
+
+    count = 0
+
+    # i의 문자 길이동안 3,6,9 찾을 시 -증가
+    for j in range(len(num_str)):
+
+        if num_str[j] == '3' or num_str[j] == '6' or num_str[j] == '9':
+            count += 1
+
+    if count > 0:
+        storage.append('-' * count)
+
+    else:
+        storage.append(num_str)
+
+    storage = ''.join(map(str, storage))
+    print(storage, end = ' ')
