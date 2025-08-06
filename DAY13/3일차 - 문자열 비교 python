@@ -1,0 +1,30 @@
+T = int(input())
+
+for t in range(1, T+1):
+
+    N = input()
+    M = input()
+
+    result = 0
+
+    # N이 탐색 가능한 범위는 M-N
+    for i in range(len(M)-len(N)+1):
+
+        count = 0
+        
+        # N의 0 인덱스의 값과 같을 경우 나머지 값과 비교
+        if N[0] == M[i]:
+
+            for j in range(len(N)):
+
+                if N[j] != M[i + j]:
+                    break
+                else:
+                    count += 1
+
+        # count가 N의 값과 같을 경우 true이므로 1반환
+        if count == len(N):
+            result = 1
+            break
+
+    print(f'#{t} {result}')
