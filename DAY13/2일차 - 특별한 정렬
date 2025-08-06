@@ -1,0 +1,30 @@
+T = int(input())
+
+for t in range(1, T+1):
+
+    N = int(input())
+
+    num_arr = list(map(int, input().split()))
+
+    result = []
+
+    max_num_length = len(num_arr)
+    num_length = 0
+
+    num_arr = sorted(num_arr)
+
+
+    # 홀수 번째에 큰 숫자가 짝수 번째에는 작은 숫자
+    for i in range(1, 11):
+
+        if i % 2 == 1:
+            result.append(num_arr[max_num_length - 1])
+            max_num_length -= 1
+
+        else:
+            result.append(num_arr[num_length])
+            num_length += 1
+
+    result = ' '.join(map(str, result))
+
+    print(f'#{t} {result}')
