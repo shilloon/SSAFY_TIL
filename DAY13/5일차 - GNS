@@ -1,0 +1,36 @@
+T = int(input())
+
+for t in range(1, T+1):
+
+    test_case = input()
+    test_case_num = (test_case.split()[1])
+    
+    num_count = {
+        'ZRO' : 0
+        ,'ONE' : 0
+        ,'TWO' : 0
+        ,'THR' : 0
+        ,'FOR' : 0
+        ,'FIV' : 0
+        ,'SIX' : 0
+        ,'SVN' : 0
+        ,'EGT' : 0
+        ,'NIN' : 0
+    }
+
+    str_list = input().split()
+
+    # 해당 문자의 갯수 저장
+    for num in str_list:
+        num_count[num] += 1
+
+    str_num = []
+
+    # key값 마다의 value 값 만큼 저장
+    for key, value in num_count.items():
+        str_num.extend([key] * value)
+
+    str_num = ' '.join(map(str, str_num))
+
+    print(f'#{t} {str_num}')
+
