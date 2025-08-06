@@ -1,0 +1,24 @@
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    N = int(input())
+
+    matrix = [list(map(int, input().split())) for _ in range(N)]
+
+    print(f'#{test_case}')
+
+    # 90도 180도 270도 돌리기
+    for i in range(N):
+
+        first_degrees = ''
+        second_degrees = ''
+        third_degrees = ''
+
+        for j in range(N):
+
+            first_degrees += str(matrix[N-1-j][i])
+            second_degrees += str(matrix[N-1-i][N-1-j])
+            third_degrees += str(matrix[j][N-1-i])
+
+        print(f'{first_degrees} {second_degrees} {third_degrees}')
