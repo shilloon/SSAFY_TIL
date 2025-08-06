@@ -1,0 +1,40 @@
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    N, K = map(int, input().split())
+
+    puzzle_matrix = [list(map(int, input().split())) for _ in range(N)]
+
+    total_count = 0
+
+    for i in range(N):
+
+        row_count = 0
+        col_count = 0
+        
+        # K가 되었을 때만 count
+        for j in range(N):
+
+            if puzzle_matrix[i][j] == 1:
+                row_count += 1
+
+            if puzzle_matrix[j][i] == 1:
+                col_count += 1
+            
+            # row와 col 초기화 하기 전 K와 같을 경우 총 갯수 +1
+            if puzzle_matrix[i][j] == 0 or j == N-1:
+
+                if row_count == K:
+                    total_count += 1
+
+                row_count = 0
+
+            if puzzle_matrix[j][i] == 0 or j == N-1:
+
+                if col_count == K:
+                    total_count += 1
+
+                col_count = 0
+
+    print(f'#{test_case} {total_count}')
