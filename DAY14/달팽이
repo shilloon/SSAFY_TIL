@@ -1,0 +1,37 @@
+N, M = map(int, input().split())
+
+matrix = [list(map(int, input().split())) for _ in range(N)]
+
+matrix_list = []
+
+for col in matrix:
+    for row in col:
+        matrix_list.append(row)
+
+matrix_list = sorted(matrix_list)
+
+dx = [1, 0, -1, 0]
+dy = [0, 1, 0, -1]
+
+x, y = 0, 0
+direction = 0
+
+snail_matrix = [[0] * M for _ in range(N)]
+
+for num in matrix_list:
+
+    snail_matrix[y][x] = num
+    nx, ny = x + dx[direction], y + dy[direction]
+
+    if not (0 <= nx < M and 0 <= ny < N and snail_matrix[ny][nx] == 0):
+        direction = (direction + 1) % 4
+        nx, ny = x + dx[direction], y + dy[direction]
+
+    x, y = nx, ny
+
+for i in range(N):
+    for j in range(M):
+        print(snail_matrix[i][j], end=' ')
+    print()
+
+
