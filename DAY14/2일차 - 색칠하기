@@ -1,0 +1,33 @@
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    N = int(input())
+
+    color_info = [list(map(int, input().split())) for _ in range(N)]
+
+    matrix = [[0] * 10 for _ in range(10)]
+
+    purple = 0
+    
+    # color 좌표 색칠하기
+    for i in range(N):
+
+        c1 = color_info[i][0]
+        r1 = color_info[i][1]
+        c2 = color_info[i][2]
+        r2 = color_info[i][3]
+        
+        
+        # matrix값이 3일 경우 Purple값 증가
+        for j in range(c1, c2+1):
+
+            for k in range(r1, r2+1):
+
+                matrix[j][k] += color_info[i][4]
+
+                if matrix[j][k] == 3:
+                    purple += 1
+
+
+    print(f'#{test_case} {purple}')
