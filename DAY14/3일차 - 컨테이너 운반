@@ -1,0 +1,29 @@
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    N, M = map(int, input().split())
+
+    cargo_list = list(map(int, input().split()))
+    truck_list = list(map(int, input().split()))
+
+    cargo_list = sorted(cargo_list, reverse=True)
+    truck_list = sorted(truck_list, reverse=True)
+
+    cargo_count = 0
+    container = 0
+
+    # 컨테이너 가능한 화물 찾기
+    for truck in truck_list:
+
+        for cargo in cargo_list:
+
+            if truck >= cargo:
+                container += cargo
+                cargo_list.remove(cargo)
+                break
+
+        if container == 0:
+            break
+
+    print(f'#{test_case} {container}')
