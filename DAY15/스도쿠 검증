@@ -1,0 +1,53 @@
+T = int(input())
+
+# 3 * 3칸 확인
+def sdocu_square(matrix, col, row):
+
+    matrix_sum = 0
+
+    for matrix_col in range(col, col+3):
+        for matrix_row in range(row, row+3):
+            matrix_sum += matrix[matrix_col][matrix_row]
+
+    if matrix_sum != 45:
+        return 0
+    else:
+        return 1
+
+for test_case in range(1, T+1):
+
+    sdocu_matrix = [list(map(int, input().split())) for _ in range(9)]
+
+    result = 1
+
+    # 가로, 세로 규칙 확인
+    for i in range(9):
+
+        if result == 0:
+            break
+
+        row_num_sum = 0
+        col_num_sum = 0
+
+        for j in range(9):
+
+            row_num_sum += sdocu_matrix[i][j]
+            col_num_sum += sdocu_matrix[j][i]
+
+        if row_num_sum != 45 or col_num_sum != 45:
+            result = 0
+            break
+
+    # 가로 세로 문제 없을 시 3 * 3 규칙 확인
+    if result != 0:
+        for i in range(0, 9, 3):
+            for j in range(0, 9, 3):
+                result = sdocu_square(sdocu_matrix, i, j)
+
+                if result == 0:
+                    break
+
+            if result == 0:
+                break
+
+    print(f'#{test_case} {result}')
