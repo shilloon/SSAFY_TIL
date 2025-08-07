@@ -1,0 +1,26 @@
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    N = int(input())
+
+    carrot_list = list(map(int, input().split()))
+
+    carrot_max = 0
+
+    # 최대 연속되는 당근 구하기
+    for i in range(N):
+
+        carrot = 1
+
+        # 연속되는 당근의 갯수
+        for j in range(i+1, N):
+
+            if carrot_list[j-1] < carrot_list[j]:
+                carrot += 1
+            else:
+                break
+
+        carrot_max = max(carrot_max, carrot)
+
+    print(f'#{test_case} {carrot_max}')
