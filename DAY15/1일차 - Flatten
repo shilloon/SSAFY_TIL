@@ -1,0 +1,28 @@
+for test_case in range(1, 11):
+
+    N = int(input())
+
+    box_list = list(map(int, input().split()))
+
+    difference = 0
+
+    for i in range(N):
+
+        # 정렬
+        box_list = sorted(box_list)
+
+        # 가장 큰 값과 작은 값의 차이가 1이하일 경우
+        if (box_list[len(box_list)-1] - box_list[0]) <= 1:
+            difference = (box_list[len(box_list)-1] - box_list[0])
+            break
+
+        # 가장 큰 값 -1, 가장 작은 값 +1
+        box_list[0] += 1
+        box_list[len(box_list)-1] -= 1
+
+        # 끝에 도달할 경우
+        if i == N-1:
+            box_list = sorted(box_list)
+            difference = box_list[len(box_list)-1] - box_list[0]
+
+    print(f'#{test_case} {difference}')
