@@ -1,0 +1,50 @@
+T = int(input())
+
+# 회문 판단
+def palindromic_letter(word, front, back):
+
+    if word[front] != word[back-1]:
+        return False
+
+    if front >= back:
+        return True
+
+    return palindromic_letter(word, front+1, back-1)
+
+
+for test_case in range(1, T+1):
+
+    N, M = map(int, input().split())
+
+    word_list = []
+
+    palindromic_word = ''
+
+    for i in range(N):
+        word = input().strip()
+        word_list.append(word)
+    
+    # 회문 구하기
+    for i in range(N):
+
+        for j in range(N-M+1):
+
+            row_word = ''
+            col_word = ''
+            
+            # M번째까지의 문자 구하기
+            for k in range(j, M+j):
+                row_word += word_list[i][k]
+                col_word += word_list[k][i]
+            
+            # 회문 판단
+            row_bool = palindromic_letter(row_word, 0, len(row_word))
+            col_bool = palindromic_letter(col_word, 0, len(col_word))
+
+            if row_bool:
+                palindromic_word = row_word
+
+            elif col_bool:
+                palindromic_word = col_word
+
+    print(f'#{test_case} {palindromic_word}')
