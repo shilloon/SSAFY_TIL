@@ -1,0 +1,45 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    N = int(input())
+
+    work_list = []
+
+
+    for i in range(N):
+
+        s, e = map(int, input().split())
+
+        work_list.append([s, e])
+
+    up_count = 0
+    up_num = 0
+
+    work_list = sorted(work_list, key = lambda x : [x[0], x[1]])
+
+    # 순서대로 갈 때
+    for i in range(N):
+
+        if up_num <= work_list[i][0]:
+            up_num = work_list[i][1]
+            up_count += 1
+
+    down_count = 0
+    down_num = 24
+
+    work_list = sorted(work_list, key = lambda x : [-x[0], -x[1]])
+
+    # 역순으로 갈 때
+    for i in range(N):
+
+        if down_num >= work_list[i][1]:
+            down_num = work_list[i][0]
+            down_count += 1
+
+    result = max(down_count, up_count)
+
+    print(f'#{test_case} {result}')
