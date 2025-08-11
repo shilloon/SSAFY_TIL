@@ -1,0 +1,24 @@
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    sentence = input()
+    sentence = list(sentence)
+
+    char_storage = []
+
+    # 같은 문자 제거
+    for ch in sentence:
+        
+        # char_storage 없을 경우
+        if ch not in char_storage:
+            char_storage.append(ch)
+
+        # 있을 경우 제거 or 있지만 연속되지 않을 경우 추가
+        else:
+            if char_storage[len(char_storage)-1] == ch:
+                char_storage.pop()
+            else:
+                char_storage.append(ch)
+
+    print(f'#{test_case} {len(char_storage)}')
