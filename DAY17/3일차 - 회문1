@@ -1,0 +1,57 @@
+def palindromic(word, first, last):
+
+    # 빈 문자열 거르기
+    if word == '':
+        return False
+
+    # 대칭 문자 같은지 확인
+    if word[first] == word[last]:
+        if first >= last:
+            return True
+        else:
+            return palindromic(word, first+1, last-1)
+
+    # 대칭 안될 경우
+    if word[first] != word[last]:
+        return False
+
+
+for test_case in range(1, 11):
+
+    N = int(input())
+
+    word_list = []
+
+    for i in range(8):
+        word = input().strip()
+        word_list.append(word)
+
+    count = 0
+
+    # 회문 판단
+    for i in range(8):
+        for j in range(8):
+            row_valid, col_valid = False, False
+            row_word, col_word = '', ''
+
+            # 가로 단어
+            for k in range(j, j+N):
+                if j + N > 8:
+                    break
+                row_word += word_list[i][k]
+
+            # 세로 단어
+            for k in range(i, i+N):
+                if i + N > 8:
+                    break
+                col_word += word_list[k][j]
+
+            row_valid = palindromic(row_word, 0, len(row_word)-1)
+            col_valid = palindromic(col_word, 0, len(col_word)-1)
+
+            if row_valid:
+                count += 1
+            if col_valid:
+                count += 1
+
+    print(f'#{test_case} {count}')
