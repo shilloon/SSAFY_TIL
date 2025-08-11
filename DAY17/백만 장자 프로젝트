@@ -1,0 +1,31 @@
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    N = int(input())
+
+    hoarding = list(map(int, input().split()))
+
+    profit = 0
+
+    change_num = N-1
+
+    # 그리드 알고리즘 활용
+    while change_num >= 0:
+
+        # 팔 수 있는 가장 큰 수로 팔기
+        for i in range(change_num-1, -1, -1):
+            if hoarding[change_num] >= hoarding[i]:
+                profit += (hoarding[change_num] - hoarding[i])
+            else:
+                change_num = i
+                break
+
+            if i == 0:
+                change_num = 0
+                break
+
+        if change_num == 0:
+            break
+
+    print(f'#{test_case} {profit}')
