@@ -1,0 +1,15 @@
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    sentence = input()
+    sentence = list(sentence)
+
+    sentence_convert_dict = {'b': 'd', 'd': 'b', 'p': 'q', 'q': 'p'}
+    result = []
+
+    # 문자열 뒤집기
+    for _ in range(len(sentence)):
+        result.append(sentence_convert_dict[sentence.pop()])
+
+    print(f"#{test_case} {''.join(map(str, result))}")
