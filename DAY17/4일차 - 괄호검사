@@ -1,0 +1,42 @@
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    sentence = input()
+    sentence = list(sentence)
+
+    bracket_judge_dict = {
+        ')': '('
+        , '}': '{'
+        , ']': '['
+    }
+
+    char_storage = []
+    result = 1
+    
+    # 괄호 판단하기
+    for ch in sentence:
+        if ch in bracket_judge_dict.values():
+            char_storage.append(ch)
+        
+        if ch in bracket_judge_dict.keys():
+            
+            # 저장된 괄호가 없을 경우
+            if not char_storage:
+                result = 0
+                break
+
+            # 마지막 index의 값과 일치하는 경우
+            if char_storage[len(char_storage)-1] == bracket_judge_dict[ch]:
+                char_storage.pop()
+            else:
+                result = 0
+                break
+    
+    # 괄호가 남아있을 경우
+    if char_storage:
+        result = 0
+
+    print(f'#{test_case} {result}')
+
+
