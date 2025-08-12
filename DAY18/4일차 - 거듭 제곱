@@ -1,0 +1,24 @@
+def square(num, index, num_sum):
+
+    if index > 1:
+        num_sum *= num
+        return square(num, index-1, num_sum)
+
+    if index == 1:
+        return num_sum
+
+
+for test_case in range(1, 11):
+
+    T = int(input())
+
+    N, M = map(int, input().split())
+
+    # 거듭 제곱 값 구하기
+    # 0일 경우 모든 수의 0의 제곱은 1
+    if M == 0:
+        result = 1
+    else:
+        result = square(N, M, N)
+
+    print(f'#{T} {result}')
