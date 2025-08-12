@@ -1,0 +1,30 @@
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    A, B = input().split()
+
+    count = 0
+    word_list = []
+    
+    # 가장 빠른 문자열 타이핑 횟수 구하기
+    while count < len(A):
+
+        judge_count = 0
+        
+        # A문자에서 B문자 찾기
+        for j in range(len(B)):
+            if 0 <= count + j < len(A):
+                if A[count + j] == B[j]:
+                    judge_count += 1
+                else:
+                    break
+
+        if judge_count == len(B):
+            word_list.append(B)
+            count += len(B)
+        else:
+            word_list.append(A[count])
+            count += 1
+
+    print(f'#{test_case} {len(word_list)}')
