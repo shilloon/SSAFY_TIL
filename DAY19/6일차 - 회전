@@ -1,0 +1,19 @@
+from collections import deque
+
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    N, M = map(int, input().split())
+
+    queue = list(map(int, input().split()))
+    
+    # deque 선언
+    queue = deque(queue)
+
+    # 리스트 M번 만큼 왼쪽으로 밀기
+    for _ in range(M):
+
+        queue.rotate(-1)
+
+    print(f'#{test_case} {queue[0]}')
