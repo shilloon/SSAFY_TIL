@@ -1,0 +1,60 @@
+from collections import deque
+
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    N, K = map(int, input().split())
+
+    password = input()
+
+    # 맨 초기 문자 저장
+    word = ''
+    initial_password = []
+    for i in range(N):
+        word += password[i]
+        if (N // 4) - 1 == i % (N//4):
+            initial_password.append(word)
+            word = ''
+
+    password_list = []
+    equal_count = 0
+
+    password_list.extend(initial_password)
+
+    # 동일한 문자들 나올 때까지 새로운 문자 추가하기
+    while equal_count < 4:
+
+        password = deque(password)
+        equal_count = 0
+        word = ''
+
+        password.rotate(1)
+        password = list(password)
+        
+        # 문자열 나누기
+        for i in range(N):
+            word += password[i]
+            if (N//4) - 1 == i % (N//4):
+                if word in initial_password:
+                    equal_count += 1
+                    word = ''
+                    continue
+                password_list.append(word)
+                word = ''
+        
+        # 변환 시킨 문자가 다 같을 경우
+        if equal_count == 4:
+            break
+    
+    # 역순
+    password_list = sorted(password_list, reverse=True)
+    
+    # 16진수 변환 후 10진수
+    result = int(password_list[K-1], 16)
+
+    print(f'#{test_case} {result}')
+
+
+
+
