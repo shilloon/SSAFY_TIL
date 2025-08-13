@@ -1,0 +1,40 @@
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    N, M, K = map(int, input().split())
+
+    wait_person = list(map(int, input().split()))
+
+    result = 'Possible'
+    bread = 0
+
+    wait_person = sorted(wait_person)
+    time_count = 0
+
+    is_valid = True
+
+    # 손님 지연 있는지 없는지 판단
+    # 손님이 0초에 오는 경우의 수 포함
+    while is_valid:
+        
+        # 0초일 때 만드는 것 방지
+        if time_count % M == 0 and time_count > 0:
+            bread += K
+        
+        # 손님 빵이 남아있는지 없는지 판단
+        for i in range(len(wait_person)):
+            if time_count == wait_person[i] and bread == 0:
+                is_valid = False
+                result = 'Impossible'
+                break
+
+            elif time_count == wait_person[i] and bread > 0:
+                bread -= 1
+                if time_count == wait_person[len(wait_person)-1]:
+                    is_valid = False
+                    break
+
+        time_count += 1
+
+    print(f'#{test_case} {result}')
