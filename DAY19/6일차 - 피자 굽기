@@ -1,0 +1,38 @@
+from collections import deque
+
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    N, M = map(int, input().split())
+
+    pizza_cheese = list(map(int, input().split()))
+
+    oven = deque()
+    next_idx = 0
+
+    # 처음 화로에 피자 채우기
+    for i in range(N):
+        oven.append([pizza_cheese[next_idx], next_idx+1])
+        next_idx += 1
+
+    last_pizza = 0
+
+    # 가장 마지막 치즈가 남는 피자 구하기
+    while oven:
+        cheese, num = oven.popleft()
+        cheese //= 2
+
+        # 치즈가 남을 경우
+        if cheese > 0:
+            oven.append([cheese, num])
+
+        # 치즈가 0일 경우
+        else:
+            last_pizza = num
+            if next_idx < M:
+                oven.append([pizza_cheese[next_idx], next_idx+1])
+                next_idx += 1
+
+    print(f'#{test_case} {last_pizza}')
+
