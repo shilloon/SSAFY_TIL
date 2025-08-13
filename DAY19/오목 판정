@@ -1,0 +1,52 @@
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    N = int(input())
+
+    omok_matrix = [input().strip() for _ in range(N)]
+
+    dxy = [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]]
+
+    is_valid = False
+    result = 'NO'
+    
+    # 오목 판정하기
+    for i in range(N):
+        for j in range(N):
+            if omok_matrix[i][j] == 'o':
+                
+                # 각 방향으로 오목 판정하기
+                for dy, dx in dxy:
+                    direction = 1
+                    for k in range(1, N):
+                        ni = dy * k + i
+                        nj = dx * k + j
+                        
+                        # 카운트 하기
+                        if 0 <= ni < N and 0 <= nj < N:
+                            if omok_matrix[ni][nj] == 'o':
+                                direction += 1
+                            if omok_matrix[ni][nj] == '.':
+                                if direction >= 5:
+                                    is_valid = True
+                                    break
+                                else:
+                                    direction = 0
+                                    break
+                    # 오목일 경우
+                    if direction >= 5:
+                        is_valid = True
+                        break
+            if is_valid:
+                break
+
+        if is_valid:
+            break
+
+    if is_valid:
+        result = 'YES'
+
+    print(f'#{test_case} {result}')
+
+
