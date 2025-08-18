@@ -1,0 +1,16 @@
+N, M = map(int, input().split())
+
+wait_list = list(map(int, input().split()))
+
+friend_list = list(map(int, input().split()))
+change_count = 0
+
+for i in range(M, N):
+    if wait_list[i] in friend_list:
+        for j in range(M):
+            if wait_list[j] not in friend_list:
+                wait_list[i], wait_list[j] = wait_list[j], wait_list[i]
+                change_count += 1
+                break
+
+print(change_count)
