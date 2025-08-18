@@ -1,0 +1,40 @@
+N, T, P = map(int, input().split())
+
+score_list = []
+score_board = []
+people_score = [list(map(int, input().split())) for _ in range(N)]
+
+# 각 문제 별 점수 구하기
+for i in range(T):
+
+    score = N
+
+    for j in range(N):
+        if people_score[j][i] == 1:
+            score -= 1
+
+    score_list.append(score)
+
+p_score = 0
+p_ranking = 0
+
+# N명의 사람들의 점수 구하기
+for i in range(N):
+    temp_score = 0
+    correct = 0
+    for j in range(T):
+        if people_score[i][j] == 1:
+            temp_score += score_list[j]
+            correct += 1
+
+    score_board.append([temp_score, correct, i+1])
+
+score_board.sort(key = lambda x : (-x[0], -x[1], x[2]))
+
+# 필립의 점수와 순위 구하기
+for i in range(N):
+    if score_board[i][2] == P:
+        p_score = score_board[i][0]
+        p_ranking = i+1
+
+print(f'{p_score} {p_ranking}')
