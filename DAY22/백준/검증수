@@ -1,0 +1,10 @@
+unique_num = list(map(int, input().split()))
+
+last_num = 0
+
+for i in range(len(unique_num)):
+    last_num += (unique_num[i] ** 2)
+
+last_num = last_num % 10
+
+print(last_num)
