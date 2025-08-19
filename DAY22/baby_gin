@@ -1,0 +1,40 @@
+from itertools import permutations
+
+
+# 연속되는 수일 경우
+def is_run(card):
+    return card[0] + 1 == card[1] and card[1] + 1 == card[2]
+
+
+# 연속으로 같은 수일 경우
+def is_triplet(card):
+    return card[0] == card[1] == card[2]
+
+
+# babygin인지 판별하는 수
+def is_babygin(card):
+
+    for perm in permutations(card):
+        first_group = perm[:3]
+        second_group = perm[3:]
+
+        if (is_run(first_group) or is_triplet(first_group)) and (is_run(second_group) or is_triplet(second_group)):
+            return 'true'
+
+
+    return 'false'
+
+
+T = int(input())
+
+for tc in range(1, T+1):
+
+    card_input = input().strip()
+    card_nums = []
+
+    for i in range(len(card_input)):
+        card_nums.append(int(card_input[i]))
+
+    baby_gin = is_babygin(card_nums)
+
+    print(f'#{tc} {baby_gin}')
