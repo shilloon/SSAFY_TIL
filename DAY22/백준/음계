@@ -1,0 +1,19 @@
+music = list(map(int, input().split()))
+
+up_count = 0
+down_count = 0
+
+for i in range(7):
+
+    if music[i] + 1 == music[i+1]:
+        up_count += 1
+
+    if music[i] - 1 == music[i+1]:
+        down_count += 1
+
+if up_count == 7:
+    print('ascending')
+elif down_count == 7:
+    print('descending')
+else:
+    print('mixed')
