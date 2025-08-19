@@ -1,0 +1,13 @@
+A = int(input())
+B = int(input())
+C = int(input())
+
+calc = str(A * B * C)
+num_list = [0] * 10
+
+for i in range(len(calc)):
+    num_list[int(calc[i])] += 1
+
+for i in range(10):
+    print(num_list[i])
+
