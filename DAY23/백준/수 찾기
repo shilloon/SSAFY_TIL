@@ -1,0 +1,29 @@
+def binary_search(arr, target):
+    left, right = 0, len(arr)-1
+
+    # 이분 탐색
+    while left <= right:
+        mid = (left + right) // 2
+
+        if arr[mid] == target:
+            return True
+        elif arr[mid] < target:
+            left = mid+1
+        else:
+            right = mid - 1
+
+    return False
+
+N = int(input())
+N_list = list(map(int, input().split()))
+M = int(input())
+M_list = list(map(int, input().split()))
+
+# 이분 탐색을 할 때는 정렬이 필요
+N_list = sorted(N_list)
+
+for num in M_list:
+    if binary_search(N_list, num):
+        print(1)
+    else:
+        print(0)
