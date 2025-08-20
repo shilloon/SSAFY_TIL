@@ -1,0 +1,70 @@
+from collections import deque
+
+T = int(input())
+
+for tc in range(1, T+1):
+
+    num_info, trade = map(str, input().split())
+    num_list = []
+    trade = int(trade)
+
+    for i in range(len(num_info)):
+        num_list.append(int(num_info[i]))
+
+    max_money = sorted(num_list, reverse = True)
+    max_num_list = []
+    for i in range(len(max_money)):
+        if max_money[i] not in max_num_list:
+            max_num_list.append(max_money[i])
+
+    # 입력받은 숫자의 trade길이만큼 가장 큰 숫자부터 순서대로 배치해야함
+    # 이미 최대 금액이면 break
+    # 가장 뒤에서부터 num_info의 trade길이까지  중 가장 큰 값부터 교환
+    # 입력받은 숫자 중 가장 큰 값부터 구하기
+    # max값들을 저장하는 리스트와 교환하는 숫자들의 리스트를 만들기
+    # 교환하는 리스트들을 정렬 시킨 후 큰 순서대로 max리스트와 popleft
+
+    nxt = 0
+    while trade > 0:
+
+        if max_money == num_list:
+            break
+
+        max_num = max_num_list[nxt]
+        count = 0
+
+        max_idx_list = deque()
+        trade_idx_list = deque()
+
+        for i in range(len(num_list)-1, (-1+trade), -1):
+            if max_num == num_list[i]:
+                max_idx_list.append([max_num, i])
+                count += 1
+
+        for i in range(len(num_list)):
+            if num_list[i] < max_num:
+                trade_idx_list.append([num_list[i], i])
+                count -= 1
+
+            if count == 0:
+                break
+
+        trade_idx_list = deque(sorted(trade_idx_list, key=lambda x: -x[1]))
+
+        for i in range(len(max_idx_list)):
+
+            max_list_num, max_idx = max_idx_list.popleft()
+            value, value_idx = trade_idx_list.popleft()
+
+            num_list[max_idx], num_list[value_idx] = value, max_list_num
+            trade -= 1
+
+            if trade == 0:
+                break
+
+        if trade == 0:
+            break
+
+        nxt += 1
+
+    print(num_list)
