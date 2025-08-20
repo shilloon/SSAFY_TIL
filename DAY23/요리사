@@ -1,0 +1,52 @@
+# 조합 알고리즘
+def comb(type_cook, dig):
+
+    if dig == 0:
+        return [[]]
+
+    num_list = []
+
+    for i in range(len(type_cook)):
+        elem = type_cook[i]
+        for rest in comb(type_cook[i+1:], dig - 1):
+            num_list.append([elem] + rest)
+
+    return num_list
+
+
+T = int(input())
+for tc in range(1, T+1):
+
+    N = int(input())
+    cook = [list(map(int, input().split())) for _ in range(N)]
+    num_list = [i for i in range(N)]
+
+    min_cook = float('inf')
+    
+    # n//2 개 중 만들어 낼 수 있는 음식 리스트
+    cook_comb_list = comb(num_list, N//2)
+    
+    # a음식과 b음식의 조합된 시너지의 최저 값 구하기
+    for a_food in cook_comb_list:
+
+        b_food = []
+
+        for num in num_list:
+            if num not in a_food:
+                b_food.append(num)
+
+        a_food_list = comb(a_food, 2)
+        a_food_sum = 0
+        for a_synergy in a_food_list:
+            i, j = a_synergy
+            a_food_sum += cook[i][j] + cook[j][i]
+
+        b_food_list = comb(b_food, 2)
+        b_food_sum = 0
+        for b_synergy in b_food_list:
+            i, j = b_synergy
+            b_food_sum += cook[i][j] + cook[j][i]
+
+        min_cook = min(min_cook, abs(a_food_sum - b_food_sum))
+
+    print(f'#{tc} {min_cook}')
