@@ -1,0 +1,23 @@
+def palindrome(num, start, end):
+
+    if start >= end:
+        return True
+
+    if num[start] == num[end]:
+        return palindrome(num, start+1, end-1)
+
+    return False
+
+while 1:
+    N = input().strip()
+    if N == '0':
+        break
+
+    num_list = list(N)
+    is_palindrome = palindrome(N, 0, (len(num_list)-1))
+
+    if is_palindrome:
+        print('yes')
+    else:
+        print('no')
+
