@@ -1,0 +1,25 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+N = int(input())
+
+word_list = [input().strip() for _ in range(N)]
+length_list = []
+
+# 중복 제거
+word_list = list(set(word_list))
+
+for i in range(len(word_list)):
+    length_list.append(len(word_list[i]))
+
+sort_word_list = []
+
+# 각 단어와 길이를 2차원리스트로 할당
+for word, length in zip(word_list, length_list):
+    sort_word_list.append([word, length])
+
+# 길이 먼저 다음 글자 순서대로 정렬
+sort_word_list = sorted(sort_word_list, key = lambda x : (x[1], x[0]))
+
+for i in range(len(sort_word_list)):
+    print(sort_word_list[i][0])
