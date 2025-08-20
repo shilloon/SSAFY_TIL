@@ -1,0 +1,31 @@
+def dfs(num_list, trade, visited):
+
+    # 교환 횟수가 없을 경우
+    if trade == 0:
+        return int("".join(num_list))
+
+    # 이미 방문한 부분 넘어가기
+    state = ("".join(num_list), trade)
+    if state in visited:
+        return 0
+    visited.add(state)
+
+    max_num = 0
+
+    # 스왑이 되는 모든 조합 찾아보기
+    for i in range(len(num_list)):
+        for j in range(i+1, len(num_list)):
+            num_list[i], num_list[j] = num_list[j], num_list[i]
+            max_num = max(max_num, dfs(num_list, trade - 1, visited))
+            num_list[i], num_list[j] = num_list[j], num_list[i]
+    return max_num
+
+T= int(input())
+for tc in range(1, T+1):
+    num_info, trade = input().split()
+    trade = int(trade)
+    num_list = list(num_info)
+
+    visited = set()
+    result = dfs(num_list, trade, visited)
+    print(f'#{tc} {result}')
