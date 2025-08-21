@@ -1,0 +1,26 @@
+def subset(row, cur_sum, used, N, matrix, min_sum):
+
+    if cur_sum >= min_sum:
+        return min_sum
+
+    if row == N:
+        return cur_sum
+    
+    # 다른 행에서 뽑아서 계산하기
+    for col in range(N):
+        if not used[col]:
+            used[col] = True
+            min_sum = min(min_sum, subset(row+1, cur_sum + matrix[col][row], used, N, matrix, min_sum))
+            used[col] = False
+
+    return min_sum
+
+T = int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    matrix = [list(map(int, input().split())) for _ in range(N)]
+    visited = []
+    used = [False] * N
+    min_sum = subset(0, 0, used, N, matrix, float('inf'))
+
+    print(f'#{tc} {min_sum}')
