@@ -1,0 +1,49 @@
+import sys
+sys.stdin = open("input.txt", "r")
+from collections import deque
+
+def rotate_magnet(magnet, rotate, start):
+
+    rotate_list = [0] * 4
+    rotate_list[start] = rotate
+
+    # 나보다 앞에 있는 자석과 비교
+    for i in range(start, 3):
+
+        if magnet[i][2] != magnet[i+1][6]:
+            rotate_list[i+1] = -rotate_list[i]
+
+    # 나보다 뒤에 있는 자석과 비교
+    for i in range(start, 0, -1):
+
+        if magnet[i][6] != magnet[i-1][2]:
+            rotate_list[i-1] = -rotate_list[i]
+
+    # 자석 돌리기
+    for i in range(4):
+        magnet[i] = deque(magnet[i])
+        if rotate_list[i] == 1:
+            magnet[i].rotate(1)
+        elif rotate_list[i] == -1:
+            magnet[i].rotate(-1)
+
+    return [list(m) for m in magnet]
+
+T = int(input())
+for tc in range(1, T+1):
+    K = int(input())
+
+    magnet = [list(map(int, input().split())) for _ in range(4)]
+    sequence = [list(map(int, input().split())) for _ in range(K)]
+
+    # 자석 돌리기
+    for magnet_i, rotate in sequence:
+        magnet = rotate_magnet(magnet, rotate, magnet_i-1)
+
+    # idx 0번 자리가 s일 경우 해당 위치의 2의 제곱만큼 더하기
+    score = 0
+    for i in range(4):
+        if magnet[i][0] == 1:
+            score += 2 ** i
+
+    print(f'#{tc} {score}')
