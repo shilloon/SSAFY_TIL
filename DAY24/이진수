@@ -1,0 +1,20 @@
+T = int(input())
+for tc in range(1, T+1):
+
+    N, M = input().split()
+
+    x = list(M)
+    binary = []
+
+    # 진수 변환
+    for i in range(len(x)):
+        num = int(x[i], 16)
+        bits = []
+        for j in range(4):
+            bits.append(num%2)
+            num //= 2
+        bits.reverse()
+        binary.extend(bits)
+
+    binary = ''.join(map(str, binary))
+    print(f'#{tc} {binary}')
