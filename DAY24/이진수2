@@ -1,0 +1,20 @@
+T = int(input())
+for tc in range(1, T+1):
+    N = float(input())
+
+    binary = ""
+
+    # 0보다 크고 1보다 작은 소수들의 이진수 구하기
+    while N > 0 and len(binary) <= 13:
+        N *= 2
+        if N >= 1:
+            binary += '1'
+            N -= 1
+        else:
+            binary += '0'
+
+        if len(binary) > 12:
+            binary = 'overflow'
+            break
+
+    print(f'#{tc} {binary}')
