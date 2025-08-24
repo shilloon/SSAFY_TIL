@@ -1,0 +1,49 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+def runway_count(runway,x):
+
+    used = [False] * len(runway)
+
+    for i in range(len(runway)-1):
+
+        if runway[i] == runway[i+1]:
+            continue
+
+        if abs(runway[i] - runway[i+1]) > 1:
+            return 0
+
+        if (runway[i] - runway[i+1]) == 1:
+            lower_height = runway[i+1]
+            for j in range(i+1, i+1+x):
+                if j >= len(runway) or runway[j] != lower_height or used[j]:
+                    return 0
+                used[j] = True
+
+        if (runway[i] - runway[i+1]) == -1:
+            lower_height = runway[i]
+            for j in range(i, i-x, -1):
+                if j < 0 or runway[j] != lower_height or used[j]:
+                    return 0
+                used[j] = True
+
+    return 1
+
+T = int(input())
+for tc in range(1, T+1):
+
+    N, X = map(int, input().split())
+    runway_matrix = [list(map(int, input().split())) for _ in range(N)]
+
+    result = 0
+
+    for i in range(N):
+        col = []
+        row = []
+        for j in range(N):
+            col.append(runway_matrix[j][i])
+            row.append(runway_matrix[i][j])
+
+        result += runway_count(col, X) + runway_count(row, X)
+
+    print(f'#{tc} {result}')
