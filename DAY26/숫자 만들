@@ -1,0 +1,43 @@
+def calc(oper, first_num, second_num):
+    if oper == 0:
+        return (first_num + second_num)
+    elif oper == 1:
+        return (first_num - second_num)
+    elif oper == 2:
+        return (first_num * second_num)
+    elif oper == 3:
+        if first_num < 0:
+            return (-(-first_num // second_num))
+        else:
+            return (first_num // second_num)
+
+def dfs(oper_list, num_list, idx, sum_calc):
+
+    if idx == len(num_list)-1:
+        return sum_calc, sum_calc
+
+    max_val = float('-inf')
+    min_val = float('inf')
+
+    for i in range(4):
+        if oper_list[i] > 0:
+            oper_list[i] -= 1
+
+            next_val = calc(i, sum_calc, num_list[idx+1])
+            sub_max, sub_min = dfs(oper_list, num_list, idx+1, next_val)
+            max_val = max(max_val, sub_max)
+            min_val = min(min_val, sub_min)
+            oper_list[i] += 1
+
+    return max_val, min_val
+
+T = int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    operate_list = list(map(int, input().split()))
+    num_list = list(map(int, input().split()))
+
+    max_calc, min_calc = dfs(operate_list, num_list, 0, num_list[0])
+    result = max_calc - min_calc
+
+    print(f'#{tc} {result}')
