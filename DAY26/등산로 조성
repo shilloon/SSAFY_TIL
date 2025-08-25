@@ -1,0 +1,40 @@
+def dfs(y, x, cnt, used, visited, trail, n, k):
+    max_len = cnt
+    dxy = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+
+    for dy, dx in dxy:
+        ny, nx = y + dy, x + dx
+        if 0 <= ny < n and 0 <= nx < n and not visited[ny][nx]:
+            if trail[ny][nx] < trail[y][x]:
+                visited[ny][nx] = True
+                max_len = max(max_len, dfs(ny, nx, cnt+1, used, visited, trail, n, k))
+                visited[ny][nx] = False
+            elif not used and trail[ny][nx] - k < trail[y][x]:
+                original = trail[ny][nx]
+                trail[ny][nx] = trail[y][x]-1
+                visited[ny][nx] = True
+                max_len = max(max_len, dfs(ny, nx, cnt+1, True, visited, trail, n, k))
+                visited[ny][nx] = False
+                trail[ny][nx] = original
+
+    return max_len
+
+T = int(input())
+for tc in range(1, T+1):
+    N, K = map(int, input().split())
+    trail_matrix = [list(map(int, input().split())) for _ in range(N)]
+
+    trail_max = max(max(row) for row in trail_matrix)
+    start_coords = []
+    for i in range(N):
+        for j in range(N):
+            if trail_matrix[i][j] == trail_max:
+                start_coords.append((i, j))
+
+    result = 0
+    for y, x in start_coords:
+        visited = [[False] * N for _ in range(N)]
+        visited[y][x] = True
+        result = max(result, dfs(y, x,1, False, visited, trail_matrix, N, K))
+
+    print(f'#{tc} {result}')
