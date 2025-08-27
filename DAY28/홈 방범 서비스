@@ -1,0 +1,65 @@
+import sys
+sys.stdin = open("input.txt", "r")
+from collections import deque
+
+def bfs(row, col, n, city):
+
+    dist = [[-1] * n for _ in range(n)]
+    q = deque([(row, col)])
+    dist[row][col] = 0
+
+    house_by_dist = [0] * (2 * n)
+    if city[row][col] == 1:
+        house_by_dist[0] = 1
+
+    dxy = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+
+    head = 0
+    while head < len(q):
+        cur_r, cur_c = q[head]
+        head += 1
+
+        for dy, dx in dxy:
+            ny = cur_r + dy
+            nx = cur_c + dx
+
+            if 0 <= ny < n and 0 <= nx < n and dist[ny][nx] == -1:
+                current_dist = dist[cur_r][cur_c] + 1
+                dist[ny][nx] = current_dist
+                q.append((ny, nx))
+                if city[ny][nx] == 1:
+                    house_by_dist[current_dist] += 1
+
+    return house_by_dist
+
+
+T = int(input())
+for tc in range(1, T+1):
+    N, M = map(int, input().split())
+    city_matrix = [list(map(int, input().split())) for _ in range(N)]
+
+    max_house = 0
+
+    for i in range(N):
+        for j in range(N):
+
+            house_by_dist = bfs(i, j, N, city_matrix)
+
+            total_house = [0] * (2 * N)
+            total_house[1] = house_by_dist[0]
+            for k in range(2, 2 * N):
+                total_house[k] = total_house[k-1] + house_by_dist[k-1]
+
+            for k in range(1, 2 * N):
+                operating_cost = ((k * k) + ((k-1) * (k-1)))
+
+                if total_house[k] == 0:
+                    continue
+
+                revenue = total_house[k] * M
+
+                if revenue >= operating_cost:
+                    if total_house[k] > max_house:
+                        max_house = total_house[k]
+
+    print(f'#{tc} {max_house}')
