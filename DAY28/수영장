@@ -1,0 +1,20 @@
+T = int(input())
+for tc in range(1, T+1):
+    ticket_list = list(map(int, input().split()))
+    year_list = [0] + list(map(int, input().split()))
+
+    dp = [0] * 13
+
+    for i in range(1, 13):
+
+        cost_month = dp[i-1] + min(year_list[i] * ticket_list[0], ticket_list[1])
+
+        cost_3month = float('inf')
+        if i >= 3:
+            cost_3month = dp[i-3] + ticket_list[2]
+
+        dp[i] = min(cost_month, cost_3month)
+
+    min_cost = min(dp[12], ticket_list[3])
+
+    print(f'#{tc} {min_cost}')
