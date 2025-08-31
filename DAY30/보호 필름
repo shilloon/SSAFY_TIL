@@ -1,0 +1,55 @@
+def is_film():
+    for j in range(W):
+        is_pass = False
+        count = 1
+
+        if K == 1:
+            continue
+
+        for i in range(1, D):
+            if film_matrix[i][j] == film_matrix[i-1][j]:
+                count += 1
+            else:
+                count = 1
+
+            if count >= K:
+                is_pass = True
+                break
+
+        if not is_pass:
+            return False
+
+    return True
+
+
+def dfs(row, medic_count):
+
+    if medic_count >= min_film[0]:
+        return
+
+    if row == D:
+        if is_film():
+            min_film[0] = min(min_film[0], medic_count)
+        return
+
+    dfs(row+1, medic_count)
+
+    origin_row = film_matrix[row][:]
+    film_matrix[row] = [0] * W
+    dfs(row+1, medic_count+1)
+
+    film_matrix[row] = [1] * W
+    dfs(row+1, medic_count+1)
+
+    film_matrix[row] = origin_row
+
+T = int(input())
+for tc in range(1, T+1):
+    D, W, K = map(int, input().split())
+    film_matrix = [list(map(int, input().split())) for _ in range(D)]
+
+    min_film = [D]
+
+    dfs(0, 0)
+
+    print(f'#{tc} {min_film[0]}')
