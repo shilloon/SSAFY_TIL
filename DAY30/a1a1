@@ -1,0 +1,54 @@
+import sys
+sys.stdin = open("input.txt", "r")
+from collections import deque
+
+
+def bfs(graph, degree, N):
+
+    q = deque()
+    for i in range(1, N+1):
+        if degree[i] == 0:
+            q.append(i)
+
+    count = 0
+    semester = 0
+
+    while q:
+        semester += 1
+
+        q_size = len(q)
+        for _ in range(q_size):
+            cur_subject = q.popleft()
+            count += 1
+
+            for next_subject in graph[cur_subject]:
+                degree[next_subject] -= 1
+                if degree[next_subject] == 0:
+                    q.append(next_subject)
+
+    if count == N:
+        return semester
+    else:
+        return -1
+
+T = int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    graph = [[] for _ in range(N+1)]
+    visited = [False] * N
+    degree = [0] * (N+1)
+
+    for num in range(1, N+1):
+        subject =list(map(int, input().split()))
+
+        first_num = subject[0]
+        data = subject[1:]
+
+        degree[num] = first_num
+
+        for i in data:
+            graph[i].append(num)
+
+    result = bfs(graph, degree, N)
+
+    print(f'#{tc} {result}')
