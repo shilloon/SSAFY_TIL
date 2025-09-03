@@ -1,0 +1,25 @@
+from collections import deque
+
+N = int(input())
+
+shirt_list = list(map(int, input().split()))
+
+T, P = map(int,input().split())
+
+t_shirt = 0
+
+q = deque(shirt_list)
+
+while q:
+
+    left_shirt = q.popleft()
+
+    t_shirt += (left_shirt // T)
+    if left_shirt % T > 0:
+        t_shirt += 1
+
+pen_bundle = N // P
+pen_piece = N % P
+
+print(t_shirt)
+print(f'{pen_bundle} {pen_piece}')
