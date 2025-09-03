@@ -1,0 +1,18 @@
+L = int(input())
+alphabet_list = input()
+
+M = 1234567891
+thirty_one = 1
+result = 0
+
+for i in range(L):
+
+    char_num = ord(alphabet_list[i]) - 96
+
+    term = (char_num * thirty_one) % M
+
+    result = (result + term) % M
+
+    thirty_one = (thirty_one * 31) % M
+
+print(result)
