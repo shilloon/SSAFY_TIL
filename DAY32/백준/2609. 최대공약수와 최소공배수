@@ -1,0 +1,37 @@
+N, M = map(int, input().split())
+
+is_valid = True
+Nnum_list = [0] * 10001
+Mnum_list = [0] * 10001
+
+index = 2
+
+while is_valid:
+
+    if N == 1 and M == 1:
+        Nnum_list[1] += 1
+        Mnum_list[1] += 1
+        break
+
+    if N % index != 0 and M % index != 0:
+        index += 1
+
+    if N % index == 0:
+        Nnum_list[index] += 1
+        N //= index
+
+    if M % index == 0:
+        Mnum_list[index] += 1
+        M //= index
+
+max_result = 1
+min_result = 1
+
+for i in range(10001):
+    if Nnum_list[i] > 0 and Mnum_list[i] > 0:
+        min_result *= (i ** min(Nnum_list[i], Mnum_list[i]))
+    if Nnum_list[i] > 0 or Mnum_list[i] > 0:
+        max_result *= (i ** max(Nnum_list[i], Mnum_list[i]))
+
+print(min_result)
+print(max_result)
