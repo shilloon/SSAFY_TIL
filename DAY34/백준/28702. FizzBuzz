@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+
+using namespace std;
+int main()
+{
+
+	string s1, s2, s3;
+	
+	cin >> s1 >> s2 >> s3;
+	
+	int number = 0, index = 0;
+
+	if (isdigit(s1[0])) {
+		index = 3;
+		number = stoi(s1);
+	}
+	else if (isdigit(s2[0])){
+		index = 2;
+		number = stoi(s2);
+	}
+	else if (isdigit(s3[0])) {
+		index = 1;
+		number = stoi(s3);
+	}
+
+	number += index;
+
+	if (number % 3 == 0 and number % 5 == 0)
+		cout << "FizzBuzz";
+
+	else if (number % 3 == 0 and number % 5 != 0)
+		cout << "Fizz";
+
+	else if (number % 3 != 0 and number % 5 == 0)
+		cout << "Buzz";
+
+	else
+		cout << number;
+
+	return 0;
+
+}
