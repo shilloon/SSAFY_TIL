@@ -1,0 +1,52 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+
+	int N;
+
+	int arr[2] = {};
+
+	cin >> N;
+
+	for (int i = N; i > 0; i--) {
+
+		int temp = i;
+
+		while (1) {
+
+			if (temp % 2 == 0) {
+				arr[0]++;
+				temp /= 2;
+			}
+			else if (temp % 5 == 0) {
+				arr[1]++;
+				temp /= 5;
+			}
+			else
+				break;
+
+		}
+
+	}
+
+	int count = 0;
+
+	while (1) {
+
+		if (arr[0] == 0 or arr[1] == 0)
+			break;
+		else {
+			arr[0]--;
+			arr[1]--;
+			count++;
+		}
+		
+	}
+
+	cout << count;
+
+	return 0;
+
+}
