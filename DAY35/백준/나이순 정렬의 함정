@@ -1,0 +1,5 @@
+algorithm에 sort와 stable sort가 있다.
+sort로 정렬할 경우 순서대로 정렬되지 않아 같은 나이일때 출력이 순서대로 이루어지지 않는다
+하지만 stable_sort를 사용하게 될 경우 순서대로 정렬되게 되어서 이 문제 같은 경우에는 stable_sort를 써야한다.
+그렇다고 stable_sort가 항상 좋냐는 아니다 
+stable_sort의 시간복잡도는 (Nlog^2N)이고 sort의 시간복잡도는 (NlogN)이므로 상황에 맞게 사용하자
