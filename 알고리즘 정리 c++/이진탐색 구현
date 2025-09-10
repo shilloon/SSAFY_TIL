@@ -1,4 +1,9 @@
-bool binary_search(vector<int>& arr, int target) {
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int binary_search(const vector<int>& arr, int target) {
 
 	int start = 0;
 	int end = arr.size() - 1;
@@ -21,4 +26,17 @@ bool binary_search(vector<int>& arr, int target) {
 	}
 	// 값을 못찾을 경우 -1 반환
 	return -1;
+}
+
+int main() {
+
+	vector<int> numbers = { 4, 13, 27, 34, 46, 51, 62, 78, 85, 99 };
+	int target = 62;
+
+	int result = binary_search(numbers, target);
+
+	cout << result;
+
+	return 0;
+
 }
