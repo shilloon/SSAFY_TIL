@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int binary_search(const vector<int>& arr, int target, int start, int end) {
+
+	if (start > end)
+		return -1;
+
+	int mid = (start + end) / 2;
+
+	if (arr[mid] == target)
+		return mid;
+	else if (arr[mid] > target)
+		return binary_search(arr, target, start, mid - 1);
+	else
+		return binary_search(arr, target, mid + 1, end);
+
+}
+
+int main() {
+
+	vector<int> numbers = { 4, 13, 27, 34, 46, 51, 62, 78, 85, 99 };
+	int target = 62;
+
+	int result = binary_search(numbers, target, 0, numbers.size()-1);
+
+	cout << result;
+
+	return 0;
+
+}
