@@ -1,0 +1,31 @@
+def preorder_traversal(tree, node, visited):
+
+    visited[node] = True
+
+    child = tree.get(node, [])
+
+    if len(child) >= 1:
+        preorder_traversal(tree, tree[node][0], visited)
+    if len(child) >= 2:
+        preorder_traversal(tree, tree[node][1], visited)
+
+    return visited
+
+test_case = int(input())
+for tc in range(1, test_case+1):
+
+    E, N = map(int, input().split())
+    node_list = list(map(int, input().split()))
+    tree = {}
+    visited = [False] * (max(node_list)+1)
+    for i in range(len(node_list)):
+        if i % 2 == 0:
+            tree.setdefault(node_list[i], []).append(node_list[i+1])
+
+    result = preorder_traversal(tree, N, visited)
+
+    count = 0
+    for i in range(len(result)):
+        if result[i]:
+            count += 1
+    print(f'#{tc} {count}')
