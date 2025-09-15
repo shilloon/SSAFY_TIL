@@ -1,0 +1,37 @@
+def try_int(tree):
+    try:
+        return int(tree)
+    except(ValueError, TypeError):
+        return tree
+
+def bfs(tree, node):
+
+    if len(tree[node]) == 1:
+        return tree[node][0]
+
+    oper, left_node, right_node = tree[node]
+    left = bfs(tree, left_node)
+    right = bfs(tree, right_node)
+
+    if oper == '-':
+        return left - right
+    if oper == '+':
+        return left + right
+    if oper == '/':
+        return left // right
+    if oper == '*':
+        return left * right
+
+
+for tc in range(1, 11):
+    N = int(input())
+    tree = {}
+
+    for i in range(N):
+        calc = list(map(str, input().split()))
+        tree.setdefault(calc[0], []).extend(calc[1:])
+
+    tree = {try_int(key): [try_int(item) for item in value] for key, value, in tree.items()}
+
+    result = bfs(tree, 1)
+    print(f'#{tc} {result}')
