@@ -1,0 +1,50 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+
+def preorder_traversal(tree_dict, node):
+
+    print(node, end=" ")
+
+    child = tree_dict.get(node, [])
+    if len(child) >= 1:
+        preorder_traversal(tree_dict, tree_dict[node][0])
+    if len(child) >= 2:
+        preorder_traversal(tree_dict, tree_dict[node][1])
+
+
+def inorder_tarveral(tree_dict, node):
+
+    child = tree_dict.get(node, [])
+    if len(child) >= 1:
+        inorder_tarveral(tree_dict, tree_dict[node][0])
+    print(node, end=" ")
+    if len(child) >= 2:
+        inorder_tarveral(tree_dict, tree_dict[node][1])
+
+
+def postorder_traversal(tree_dict, node):
+
+    child = tree_dict.get(node, [])
+    if len(child) >= 1:
+        postorder_traversal(tree_dict, tree_dict[node][0])
+    if len(child) >= 2:
+        postorder_traversal(tree_dict, tree_dict[node][1])
+    print(node, end=" ")
+
+
+N = int(input())
+tree_list = list(map(int, input().split()))
+
+tree_dict = {}
+
+for i in range(0, len(tree_list), 2):
+    tree_dict.setdefault(tree_list[i], []).append(tree_list[i+1])
+
+
+preorder_traversal(tree_dict, tree_list[0])
+print()
+inorder_tarveral(tree_dict, tree_list[0])
+print()
+postorder_traversal(tree_dict, tree_list[0])
+
