@@ -1,0 +1,43 @@
+import sys
+sys.stdin = open("input.txt", "r")
+from collections import defaultdict
+
+
+def dfs(graph, start_vertex, end_vertex, visited):
+
+    if start_vertex in visited:
+        return
+
+    if start_vertex == end_vertex:
+        return True
+
+    visited.add(start_vertex)
+    vertex_list = graph[start_vertex]
+
+    for i in range(len(vertex_list)):
+        if vertex_list[i] in visited:
+            continue
+        if dfs(graph, vertex_list[i], end_vertex, visited):
+            return True
+
+    return False
+
+test_case = int(input())
+for tc in range(1, test_case+1):
+    V, E = map(int, input().split())
+    graph = defaultdict(list)
+    visited = set()
+    is_valid = False
+
+    for i in range(E):
+        start, end = map(int, input().split())
+        graph[start].append(end)
+
+    S, G = map(int, input().split())
+
+    is_valid = dfs(graph, S, G, visited)
+
+    if is_valid:
+        print(f'#{tc} {1}')
+    else:
+        print(f'#{tc} {0}')
