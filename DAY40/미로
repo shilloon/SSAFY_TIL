@@ -1,0 +1,46 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+
+def dfs(start_point, end_point, maze_matrix):
+
+    x, y = start_point
+
+    if start_point == end_point:
+        return True
+
+    if maze_matrix[x][y] == 1:
+        return False
+
+    dxy = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+    maze_matrix[x][y] = 1
+
+    for dx, dy in dxy:
+        nx, ny = x + dx, y + dy
+        start_point = (nx, ny)
+        if dfs(start_point, end_point, maze_matrix):
+            return True
+
+    return False
+
+for tc in range(10):
+
+    test_case = int(input())
+    maze_matrix = [list(map(int, input().strip())) for _ in range(16)]
+
+    start_point = []
+    end_point = []
+
+    for i in range(16):
+        for j in range(16):
+            if maze_matrix[i][j] == 2:
+                start_point = (i, j)
+            if maze_matrix[i][j] == 3:
+                end_point = (i, j)
+
+    result = dfs(start_point, end_point, maze_matrix)
+
+    if result:
+        print(f'#{test_case} 1')
+    else:
+        print(f'#{test_case} 0')
