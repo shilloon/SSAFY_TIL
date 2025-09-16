@@ -1,0 +1,43 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+
+def dfs(map_matrix, x, y, k, client_cost, N, max_count):
+
+    if k > N+1:
+        return max_count
+
+    cost = k * k + (k-1) * (k-1)
+    original_k = k - 1
+    total = 0
+    for nk in range(-original_k, original_k + 1):
+        nx = x + nk
+        rem = original_k - abs(nk)
+
+        if nx < 0:
+            continue
+        if nx >= N:
+            break
+
+        for c in range(max(0, y-rem), min(N, y+rem+1)):
+            total += map_matrix[nx][c]
+
+    if cost <= client_cost * total:
+        max_count = max(max_count, total)
+
+    return dfs(map_matrix, x, y, k+1, client_cost, N, max_count)
+
+
+test_case = int(input())
+for tc in range(1, test_case+1):
+
+    N, M = map(int, input().split())
+
+    map_matrix = [list(map(int, input().split())) for _ in range(N)]
+    service_house = float('-inf')
+
+    for i in range(N):
+        for j in range(N):
+            service_house = max(service_house, dfs(map_matrix, i, j, 1, M, N, 0))
+
+    print(f'#{tc} {service_house}')
