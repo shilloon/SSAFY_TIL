@@ -1,0 +1,47 @@
+#include <iostream>
+#include <cmath>
+#include <algorithm>
+#include <deque>
+
+using namespace std;
+
+int main() {
+
+	int N;
+	cin >> N;
+
+	if (N == 0) {
+		cout << 0;
+		return 0;
+	}
+
+	deque<int> community_score;
+
+	int remove_score = round(N * 0.15);
+
+	for (int i = 0; i < N; i++) {
+		int score;
+		cin >> score;
+		community_score.push_back(score);
+	}
+
+	sort(community_score.begin(), community_score.end());
+	double result = 0;
+
+	for (int i = 0; i < remove_score; i++) {
+
+		community_score.pop_back();
+		community_score.pop_front();
+
+	}
+
+	for (int i = 0; i < community_score.size(); i++) {
+		result += community_score[i];
+	}
+	
+	result = round(result/ community_score.size());
+	cout << int(result);
+
+	return 0;
+
+}
