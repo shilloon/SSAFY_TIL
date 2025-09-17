@@ -1,0 +1,53 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+
+def dfs(x, y, k_count, count):
+
+    max_len = count
+
+    visited.add((x, y))
+
+    way_count = 0
+
+    for r, c in dxy:
+        way_count += 1
+        nr, nc = x + r, y + c
+        if 0 <= nr < N and 0 <= nc < N:
+            if (nr, nc) in visited:
+                continue
+
+            if mountain[nr][nc] < mountain[x][y]:
+                max_len = max(max_len, dfs(nr, nc, k_count, count+1))
+
+            elif k_count > 0:
+                if mountain[nr][nc] - K < mountain[x][y]:
+
+                    original_height = mountain[nr][nc]
+                    mountain[nr][nc] = mountain[x][y]-1
+                    max_len = max(max_len, dfs(nr, nc, k_count - 1, count+1))
+                    mountain[nr][nc] = original_height
+
+    visited.remove((x, y))
+
+    return max_len
+
+
+dxy = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+T = int(input())
+for tc in range(1, T+1):
+    N, K = map(int, input().split())
+    mountain = [list(map(int, input().split())) for _ in range(N)]
+
+    max_height = float('-inf')
+    for i in range(N):
+        max_height = max(max_height, max(mountain[i]))
+
+    result = float('-inf')
+    for i in range(N):
+        for j in range(N):
+            if max_height == mountain[i][j]:
+                visited = set()
+                result = max(result, dfs(i, j, 1, 1))
+
+    print(f'#{tc} {result}')
