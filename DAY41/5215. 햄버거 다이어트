@@ -1,0 +1,32 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+
+def dfs(taste, cal, index):
+
+    if cal > L:
+        return taste - ingredients[index-1][0]
+
+    if index == N:
+        if cal > L:
+            return taste - ingredients[index-1][0]
+        else:
+            return taste
+
+    res1 = dfs(taste + ingredients[index][0], cal + ingredients[index][1], index+1)
+    res2 = dfs(taste, cal, index+1)
+
+    return max(res1, res2)
+
+T = int(input())
+for tc in range(1, T+1):
+    N, L = map(int, input().split())
+    ingredients = []
+
+    for _ in range(N):
+        score, calorie = map(int, input().split())
+        ingredients.append([score, calorie])
+
+    result = dfs(0, 0, 0)
+
+    print(f'#{tc} {result}')
