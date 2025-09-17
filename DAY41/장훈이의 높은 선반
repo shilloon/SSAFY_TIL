@@ -1,0 +1,30 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+def dfs(index, height):
+
+    if height >= B:
+        return height
+
+    if index == N:
+
+        if height >=B:
+            return height
+        else:
+            return float('inf')
+
+    res1 = dfs(index+1, height + S[index])
+    res2 = dfs(index+1, height)
+
+    return min(res1, res2)
+
+test_case = int(input())
+for tc in range(1, test_case+1):
+
+    N, B = map(int, input().split())
+
+    S = list(map(int, input().split()))
+
+    result = dfs(0, 0)
+
+    print(f'#{tc} {result - B}')
