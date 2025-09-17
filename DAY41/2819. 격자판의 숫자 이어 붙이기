@@ -1,0 +1,33 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+
+def dfs(seven_sent, x, y):
+    global overlap
+
+    if len(seven_sent) == 7:
+        overlap.add(seven_sent)
+        return
+
+    for r, c in dxy:
+        nx, ny = r+x, c+y
+        if 0 <= nx < 4 and 0 <= ny < 4:
+            dfs(seven_sent + matrix[x][y], nx, ny)
+        else:
+            continue
+
+
+dxy = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+T = int(input())
+for tc in range(1, T+1):
+
+    matrix = [list(map(str, input().split())) for _ in range(4)]
+    overlap = set()
+
+    for i in range(4):
+        for j in range(4):
+            dfs('', i, j)
+
+    result = len(overlap)
+
+    print(f'#{tc} {result}')
