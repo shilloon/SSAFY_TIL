@@ -1,0 +1,51 @@
+import sys
+sys.stdin = open("input.txt", "r")
+from collections import deque
+
+dxy = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+def bfs(start_point, end_point):
+
+    x, y = start_point
+    ex, ey = end_point
+
+    q = deque()
+    q.append((x, y))
+    maze_matrix[x][y] = 1
+
+    while q:
+
+        cx, cy = q.popleft()
+
+        for dx, dy in dxy:
+            nx, ny = cx + dx, cy + dy
+
+            if nx < 0 or nx >= 16 or ny < 0 or ny >= 16: continue
+
+            if maze_matrix[nx][ny] == 1: continue
+
+            if nx == ex and ny == ey:
+                return 1
+
+            q.append((nx, ny))
+            maze_matrix[nx][ny] = 1
+
+    return 0
+
+
+for _ in range(10):
+    T = int(input())
+    maze_matrix = [list(map(int, input().strip())) for _ in range(16)]
+
+    start_point = (0, 0)
+    end_point = (0, 0)
+
+    for i in range(16):
+        for j in range(16):
+            if maze_matrix[i][j] == 2:
+                start_point = (i, j)
+            if maze_matrix[i][j] == 3:
+                end_point = (i, j)
+
+    result = bfs(start_point, end_point)
+
+    print(f'#{T} {result}')
