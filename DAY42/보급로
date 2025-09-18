@@ -1,0 +1,40 @@
+import sys
+sys.stdin = open("input.txt", "r")
+from collections import deque
+
+
+def bfs(x, y):
+
+    cost = [[float('inf')] * N for _ in range(N)]
+
+    q = deque()
+    q.append((x, y))
+
+    cost[x][y] = map_matrix[x][y]
+
+    while q:
+        cx, cy = q.popleft()
+
+        for dx, dy in dxy:
+            nx, ny = cx + dx, cy + dy
+
+            if nx < 0 or ny < 0 or nx >= N or ny >= N: continue
+
+            new_cost = cost[cx][cy] + map_matrix[nx][ny]
+
+            if new_cost < cost[nx][ny]:
+                cost[nx][ny] = new_cost
+                q.append((nx, ny))
+
+    return cost[N-1][N-1]
+
+
+dxy = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+test_case = int(input())
+for tc in range(1, test_case+1):
+    N = int(input())
+    map_matrix = [list(map(int, input().strip())) for _ in range(N)]
+
+    result = bfs(0, 0)
+
+    print(f'#{tc} {result}')
