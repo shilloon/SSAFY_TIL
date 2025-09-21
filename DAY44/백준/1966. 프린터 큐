@@ -1,0 +1,63 @@
+#include <iostream>
+#include <deque>
+#include <vector>
+#include <utility>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+
+	int test_case;
+	cin >> test_case;
+
+	for (int tc = 1; tc <= test_case; tc++) {
+
+		int N, M;
+		cin >> N >> M;
+		deque<pair<int, int>> q;
+		vector<int> prioirty_v;
+
+		for (int i = 0; i < N; i++) {
+			int num;
+			cin >> num;
+			q.push_back({i, num});
+			prioirty_v.push_back(num);
+		}
+
+		sort(prioirty_v.rbegin(), prioirty_v.rend());
+		int index = 0, count = 0;
+		pair<int, int>front_elem;
+
+		while (!q.empty()) {
+
+			if (q.front().second == prioirty_v[index]) {
+
+				count += 1;
+
+				if (q.front().first == M) 
+					break;
+
+				else {
+
+					index += 1;
+					q.pop_front();
+
+				}
+			}
+			else {
+
+				front_elem = q.front();
+				q.pop_front();
+				q.push_back(front_elem);
+
+			}
+		}
+
+		cout << count << "\n";
+
+	}
+
+	return 0;
+
+}
