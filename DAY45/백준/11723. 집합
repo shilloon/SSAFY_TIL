@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int N;
+	cin >> N;
+	vector<int> arr;
+
+	for (int i = 0; i < N; i++) {
+
+		string s;
+		int num;
+		cin >> s;
+		if (s == "all") {
+
+			for (int i = 1; i <= 20; i++) {
+				auto it = find(arr.begin(), arr.end(), i);
+
+				if (it == arr.end())
+					arr.push_back(i);
+
+			}
+
+		}
+
+		else if (s == "empty") 
+			arr.clear();
+
+		else {
+
+			cin >> num;
+			auto it = find(arr.begin(), arr.end(), num);
+			if (s == "add" && it == arr.end())
+				arr.push_back(num);
+
+			else if (s == "remove" && it != arr.end())
+				arr.erase(remove(arr.begin(), arr.end(), num), arr.end());
+
+			else if (s == "check") {
+
+				if (it != arr.end())
+					cout << 1 << "\n";
+				else
+					cout << 0 << "\n";
+
+			}
+
+			else if (s == "toggle") {
+
+				if (it == arr.end())
+					arr.push_back(num);
+				else
+					arr.erase(remove(arr.begin(), arr.end(), num), arr.end());
+
+			}
+
+		}
+	}
+
+	return 0;
+
+}
