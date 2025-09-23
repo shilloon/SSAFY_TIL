@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+int main() {
+
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	int N, M;
+	cin >> N >> M;
+
+	map<string, int> poketmon_dict;
+	vector<string> number_poketmon_dict(N+1);
+	for (int i = 1; i <= N; i++) {
+		
+		string poketmon_name;
+		cin >> poketmon_name;
+		poketmon_dict[poketmon_name] = i;
+		number_poketmon_dict[i] = poketmon_name;
+
+	}
+
+	for (int i = 0; i < M; i++) {
+
+		string query;
+		cin >> query;
+
+		if (isdigit(query[0])) {
+			int num = stoi(query);
+			cout << number_poketmon_dict[num] << "\n";
+		}
+		else {
+			cout << poketmon_dict[query] << "\n";
+		}
+
+	}
+
+	return 0;
+
+}
