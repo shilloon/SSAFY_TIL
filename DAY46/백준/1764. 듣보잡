@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <set>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+
+	int N, M;
+	cin >> N >> M;
+
+	set<string> not_hear;
+	for (int i = 0; i < N; i++) {
+		string name;
+		cin >> name;
+		not_hear.insert(name);
+	}
+
+	vector<string> not_hear_look;
+	for (int i = 0; i < M; i++) {
+		string name;
+		cin >> name;
+		if (not_hear.count(name)) {
+			not_hear_look.push_back(name);
+		}
+	}
+
+	sort(not_hear_look.begin(), not_hear_look.end());
+
+	cout << not_hear_look.size() << "\n";
+	for (const auto& name : not_hear_look) {
+		cout << name << "\n";
+	}
+
+	return 0;
+
+}
