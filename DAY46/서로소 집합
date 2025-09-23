@@ -1,0 +1,46 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+
+def find_set(x):
+    if x != p_list[x]:
+        p_list[x] = find_set(p_list[x])
+    return p_list[x]
+
+
+def union_set(x, y):
+    px = find_set(x)
+    py = find_set(y)
+
+    if px != py:
+        if rank[px] > rank[py]:
+            p_list[py] = px
+        elif rank[py] > rank[px]:
+            p_list[px] = py
+        else:
+            p_list[py] = px
+            rank[px] += 1
+
+
+T = int(input())
+for tc in range(1, T+1):
+
+    N, M = map(int, input().split())
+
+    p_list = list(range(N+1))
+    rank = [0] * (N+1)
+    result = ''
+
+    for i in range(M):
+        design_set, a, b = map(int, input().split())
+
+        if design_set == 0:
+            union_set(a, b)
+
+        if design_set == 1:
+            if find_set(a) == find_set(b):
+                result += '1'
+            else:
+                result += '0'
+
+    print(f'#{tc} {result}')
