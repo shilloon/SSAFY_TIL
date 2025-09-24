@@ -1,0 +1,43 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+int main() {
+
+	stack<int> coin_list;
+	int N, K;
+	cin >> N >> K;
+	
+	int coin_count = 0;
+	for (int i = 0; i < N; i++) {
+
+		int coin;
+		cin >> coin;
+		coin_list.push(coin);
+
+	}
+
+	int money;
+
+	while (K > 0) {
+
+		money = coin_list.top();
+		coin_list.pop();
+		
+		if (money > K) {
+			continue;
+		}
+		else {
+
+			coin_count += (K / money);
+			K = K - (K / money) * money;
+
+		}
+	}
+
+	cout << coin_count << endl;
+
+	return 0;
+
+}
