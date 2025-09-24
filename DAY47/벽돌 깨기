@@ -1,0 +1,79 @@
+import sys
+sys.stdin = open("input.txt", "r")
+from collections import deque
+import copy
+
+
+def bfs(r, c, board):
+    q = deque([(r, c, board[r][c])])
+    board[r][c] = 0
+
+    while q:
+        x, y, power = q.popleft()
+
+        for i in range(1, power):
+            for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                nx, ny = x + dx * i, y + dy * i
+
+                if 0 <= nx < H and 0 <= ny < W and board[nx][ny] > 0:
+                    q.append((nx, ny, board[nx][ny]))
+                    board[nx][ny] = 0
+
+
+def gravity(board):
+    for j in range(W):
+        temp_col = deque()
+        for i in range(H - 1, -1, -1):
+            if board[i][j] > 0:
+                temp_col.append(board[i][j])
+
+        for i in range(H):
+            board[i][j] = 0
+
+        idx = H - 1
+        while temp_col:
+            board[idx][j] = temp_col.popleft()
+            idx -= 1
+
+
+def dfs(n, board):
+    global ans
+
+    if n == N:
+        count = 0
+
+        for i in range(H):
+            for j in range(W):
+                if board[i][j] > 0:
+                    count += 1
+
+        ans = min(ans, count)
+        return
+
+    for j in range(W):
+        temp_board = copy.deepcopy(board)
+
+        r = -1
+        for i in range(H):
+            if temp_board[i][j] > 0:
+                r = i
+                break
+
+        if r != -1:
+            bfs(r, j, temp_board)
+            gravity(temp_board)
+            dfs(n + 1, temp_board)
+        else:
+            dfs(n + 1, temp_board)
+
+
+T = int(input())
+for tc in range(1, T + 1):
+    N, W, H = map(int, input().split())
+    matrix = [list(map(int, input().split())) for _ in range(H)]
+
+    ans = W * H
+
+    dfs(0, matrix)
+
+    print(f"#{tc} {ans}")
