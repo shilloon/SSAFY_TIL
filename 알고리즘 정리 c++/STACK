@@ -1,0 +1,53 @@
+// header
+#include <iostream>
+
+using namespace std;
+
+// define
+#define size 100
+
+// global variable
+int stack[size];
+int top = -1;
+
+void push(int item) {
+
+	if (top >= size - 1) {
+		cout << "Stack is Full" << "\n";
+		exit(1);
+	}
+
+	else stack[++top] = item;
+
+}
+
+int pop() {
+
+	if (top == -1) {
+		cout << "Stack is Empty" << "\n";
+		exit(2);
+	}
+	else return stack[top--];
+
+}
+
+void del() {
+
+	if (top == -1) {
+		cout << "Stack is Empty" << "\n";
+		exit(3);
+	}
+	else top--;
+
+}
+
+
+int peek() {
+
+	if (top == -1) {
+		cout << "Stack is Empty" << "\n";
+		exit(4);
+	}
+	else return stack[top];
+
+}
