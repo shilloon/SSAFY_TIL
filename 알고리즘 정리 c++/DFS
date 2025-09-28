@@ -1,0 +1,15 @@
+#include <iostream>
+
+int map[1001][1001] = { 0 }, visit[1001];
+
+void dfs(int vertex) {
+
+	visit[vertex] = 1;
+	std::cout << vertex;
+	for (int i = 1; i <= n; i++) {
+		if (map[vertex][i] == 1 && !visit[i]) {
+			dfs(i);
+		}
+	}
+
+}
