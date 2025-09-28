@@ -1,0 +1,44 @@
+// header
+#include <iostream>
+
+using namespace std;
+
+// define
+#define SIZE 50010
+
+// global variable
+int dq[SIZE];
+int head = 20000, rear = 20000;
+
+void push_front(int data) {
+	dq[--head] = data;
+}
+
+void push_back(int data) {
+	dq[rear++] = data;
+}
+
+int pop_front() {
+	if (head >= rear) return -1;
+	return dq[head++];
+}
+
+int pop_back() {
+	if (head >= rear) return -1;
+	return dq[--rear];
+}
+
+int size() {
+	return rear - head;
+}
+
+int front() {
+	if (head >= rear) return -1;
+	return dq[head];
+}
+
+int back() {
+	if (head >= rear) return -1;
+	return dq[rear - 1];
+}
+
