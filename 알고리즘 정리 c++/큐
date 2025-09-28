@@ -1,0 +1,40 @@
+// header
+#include <iostream>
+
+using namespace std;
+
+// define
+#define SIZE 10010
+
+// global variable
+int q[SIZE];
+int front = 0;
+int rear = 0;
+
+void push(int data) {
+	q[rear++] = data;
+}
+
+int pop() {
+	if (front >= rear) return -1;
+	return q[front++];
+}
+
+int size() {
+	return rear - front;
+}
+
+int empty() {
+	if (front >= rear) return 1;
+	return false;
+}
+
+int getFront() {
+	if (front >= rear) return -1;
+	return q[front];
+}
+
+int getBack() {
+	if (front >= rear) return -1;
+	return q[rear - 1];
+}
