@@ -1,0 +1,41 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
+
+using namespace std;
+
+int main() {
+
+	int N, M;
+	cin >> N >> M;
+
+	string email, password;
+	unordered_map<string, string> user_info;
+
+	for (int i = 0; i < N; i++) {
+
+		cin >> email >> password;
+		user_info.insert(make_pair(email, password));
+
+	}
+
+	vector<string> find_password(M);
+	for (int i = 0; i < M; i++) {
+		cin >> find_password[i];
+	}
+
+	for (int i = 0; i < M; i++) {
+
+		if (user_info.find(find_password[i]) != user_info.end()) {
+
+			cout << user_info[find_password[i]] << "\n";
+
+		}
+
+	}
+
+	system("pause");
+	return 0;
+
+} 
