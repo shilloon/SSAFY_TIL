@@ -1,0 +1,23 @@
+import sys
+sys.stdin = open("input.txt", "r")
+import heapq
+
+T = int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    numbers = list(map(int, input().split()))
+
+    heap = []
+
+    for num in numbers:
+        heapq.heappush(heap, num)
+
+    total_sum = 0
+    cur_idx = len(heap) - 1
+
+    while cur_idx > 0:
+        parent_idx = (cur_idx - 1) // 2
+        total_sum += heap[parent_idx]
+        cur_idx = parent_idx
+
+    print(f'#{tc} {total_sum}')
