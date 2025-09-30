@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	int N;
+	cin >> N;
+	vector<int> user_card(N);
+	for (int i = 0; i < N; i++) {
+		cin >> user_card[i];
+	}
+	int M;
+	cin >> M;
+	vector<int> card(M);
+	for (int i = 0; i < M; i++) {
+		cin >> card[i];
+	}
+
+	sort(user_card.begin(), user_card.end());
+
+	vector<int> card_count(M);
+	int last, first;
+
+	for (int i = 0; i < M; i++) {
+
+		last = upper_bound(user_card.begin(), user_card.end(), card[i]) - user_card.begin();
+		first = lower_bound(user_card.begin(), user_card.end(), card[i]) - user_card.begin();
+
+		card_count[i] = last - first;
+
+	}
+
+	for (int i = 0; i < M; i++) {
+		cout << card_count[i] << " ";
+	}
+
+	return 0;
+
+}
