@@ -1,0 +1,33 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+
+def binary_search(arr, high, low, target):
+    if high < low:
+        return -1
+
+    mid = low + (high - low) // 2
+
+    if target == arr[mid]:
+        return mid
+    elif target < arr[mid]:
+        return binary_search(arr, mid - 1, low, target)
+    else:
+        return binary_search(arr, high, mid + 1, target)
+
+
+T = int(input())
+for tc in range(1, T + 1):
+    N, M = map(int, input().split())
+
+    N_list = list(map(int, input().split()))
+    M_list = list(map(int, input().split()))
+
+    N_list.sort()
+    count = 0
+
+    for i in range(M):
+        if binary_search(N_list, N - 1, 0, M_list[i]) != -1:
+            count += 1
+
+    print(f'#{tc} {count}')
