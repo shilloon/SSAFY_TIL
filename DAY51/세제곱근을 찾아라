@@ -1,0 +1,23 @@
+def sqr_root(num, low, high):
+
+    if high < low:
+        return -1
+
+    mid = (low + high) // 2
+    x = mid * mid * mid
+
+    if x == num:
+        return mid
+    elif x < num :
+        return sqr_root(num, mid+1, high)
+    else:
+        return sqr_root(num, low, mid-1)
+
+
+T = int(input())
+for tc in range(1, T+1):
+    N = int(input())
+
+    result = sqr_root(N, 0, N)
+
+    print(f'#{tc} {result}')
