@@ -1,0 +1,17 @@
+T = int(input())
+for tc in range(1, T+1):
+    N, M = map(int, input().split())
+
+    dp = [0] * (N+1)
+    product = []
+    for i in range(M):
+        size, price = map(int, input().split())
+        product.append([size, price])
+
+    for i in range(M):
+        size, price = product[i]
+
+        for j in range(N, size - 1, -1):
+            dp[j] = max(dp[j], price + dp[j - size])
+
+    print(f'#{tc} {dp[N]}')
