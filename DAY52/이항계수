@@ -1,0 +1,16 @@
+Max_N = 70
+dp = [[0] * (Max_N + 1) for _ in range(Max_N + 1)]
+
+for i in range(Max_N + 1):
+    dp[i][0] = 1
+    for j in range(1, i):
+        dp[i][j] = dp[i - 1][j] + dp[i - 1][j - 1]
+    dp[i][i] = 1
+
+T = int(input())
+for tc in range(1, T+1):
+    N, A, B = map(int, input().split())
+
+    result = dp[N][A]
+
+    print(f'#{tc} {result}')
