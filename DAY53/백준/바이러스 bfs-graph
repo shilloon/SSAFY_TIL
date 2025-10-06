@@ -1,0 +1,78 @@
+#include <iostream>
+#include <vector>
+#include <deque>
+#include <unordered_map>
+
+using namespace std;
+using Graph = unordered_map<int, vector<int>>;
+
+
+int bfs(const Graph& graph, int num_computers, int start_node) {
+
+	vector<bool> visited(num_computers + 1, false);
+
+	deque<int> q;
+
+	int count = 0;
+
+	q.push_back(start_node);
+	visited[start_node] = true;
+
+	while (!q.empty()) {
+		
+		int cur_node = q.front();
+		q.pop_front();
+
+		if (cur_node != start_node) {
+
+			count++;
+
+		}
+
+		auto it = graph.find(cur_node);
+		if (it != graph.end()) {
+
+			for (int neighbor : it->second) {
+				
+				if (!visited[neighbor]) {
+					visited[neighbor] = true;
+					q.push_back(neighbor);
+				}
+			}
+
+		}
+
+	}
+
+	return count;
+
+}
+
+
+int main() {
+
+	int computer;
+	cin >> computer;
+
+	int computer_pair;
+	cin >> computer_pair;
+
+	Graph graph;
+
+	for (int i = 0; i < computer_pair; i++) {
+
+		int u, v;
+		cin >> u >> v;
+
+		graph[u].push_back(v);
+		graph[v].push_back(u);
+
+	}
+
+	int result = bfs(graph, computer, 1);
+
+	cout << result << endl;
+
+	return 0;
+
+}
