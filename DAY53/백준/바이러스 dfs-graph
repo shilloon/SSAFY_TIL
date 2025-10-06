@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+
+using namespace std;
+
+using Graph = unordered_map<int, vector<int>>;
+
+vector<bool> visited;
+
+void dfs(const Graph& graph, int cur_node) {
+
+	visited[cur_node] = true;
+
+	auto it = graph.find(cur_node);
+	if (it != graph.end()) {
+		for (int neighbor : it->second) {
+
+			if (!visited[neighbor]) {
+				dfs(graph, neighbor);
+			}
+
+		}
+
+	}
+
+}
+
+int main() {
+
+	int computer;
+	cin >> computer;
+
+	int computer_pair;
+	cin >> computer_pair;
+
+	Graph graph;
+	for (int i = 0; i < computer_pair; i++) {
+		int u, v;
+		cin >> u >> v;
+		graph[u].push_back(v);
+		graph[v].push_back(u);
+	}
+
+	visited.assign(computer + 1, false);
+
+	int start_node = 1;
+	dfs(graph, start_node);
+
+	int total_infected = count(visited.begin(), visited.end(), true);
+
+	cout << total_infected - 1 << endl;
+
+	return 0;
+
+}
