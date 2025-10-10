@@ -1,0 +1,96 @@
+#include <iostream>
+#include <vector>
+#include <deque>
+#include <utility>
+
+using namespace std;
+
+void bfs(vector<vector<int>>& farm_matrix, vector<vector<bool>>& visited, int start_x, int start_y, int N, int M, const int dy[], const int dx[]) {
+
+	int dir = 4;
+	visited[start_y][start_x] = true;
+	deque<pair<int, int>> q;
+	q.push_back({ start_y, start_x });
+
+	while (!q.empty()) {
+
+		pair<int, int> cur = q.front();
+		q.pop_front();
+
+		int y = cur.first;
+		int x = cur.second;
+
+		for (int i = 0; i < dir; i++) {
+
+			int ny = y + dy[i];
+			int nx = x + dx[i];
+
+			if (ny >= 0 && nx >= 0 && ny < N && nx < M) {
+
+				if (farm_matrix[ny][nx] == 1 && !visited[ny][nx]) {
+
+					visited[ny][nx] = true;
+					q.push_back({ ny, nx });
+
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	int T;
+	cin >> T;
+	
+	int dx[4] = {0, 0, -1, 1};
+	int dy[4] = {-1, 1, 0, 0};
+
+	for (int test_case = 0; test_case < T; test_case++) {
+
+		int M, N, K;
+		cin >> M >> N >> K;
+
+		vector<vector<int>> farm_matrix(N, vector<int>(M, 0));
+		vector<vector<bool>> visited(N, vector<bool>(M, false));
+
+		for (int i = 0; i < K; i++) {
+
+			int X, Y;
+			cin >> X >> Y;
+
+			farm_matrix[Y][X] = 1;
+
+		}
+
+		int worm_count = 0;
+
+		for (int i = 0; i < N; i++) {
+
+			for (int j = 0; j < M; j++) {
+
+				if (farm_matrix[i][j] == 1 && !visited[i][j]) {
+
+					worm_count++;
+					bfs(farm_matrix, visited, j, i, N, M, dy, dx);
+
+				}
+
+			}
+
+		}
+
+		cout << worm_count << "\n";
+
+	}
+
+	return 0;
+
+}
