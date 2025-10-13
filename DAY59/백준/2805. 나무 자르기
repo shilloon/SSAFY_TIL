@@ -1,0 +1,82 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+bool check(long long int H, int N, long long int M, const vector<int>& trees) {
+
+	long long total_length = 0;
+
+	for (int tree_height : trees) {
+
+		if (tree_height > H) {
+
+			total_length += (tree_height - H);
+
+		}
+
+		if (total_length >= M) {
+
+			return true;
+
+		}
+
+	}
+
+	return total_length >= M;
+
+}
+
+void solve() {
+
+	int N;
+	long long int M;
+	cin >> N >> M;
+
+	vector<int> trees(N + 1);
+	long long int max_tree_height = 0;
+	for (int i = 0; i < N; i++) {
+
+		cin >> trees[i];
+		if (trees[i] > max_tree_height) {
+
+			max_tree_height = trees[i];
+
+		}
+
+	}
+
+	long long int low = 0;
+	long long int high = max_tree_height;
+	long long int max_height = 0;
+
+	while (low <= high) {
+
+		long long mid = low + (high - low) / 2;
+
+		if (check(mid, N, M, trees)) {
+
+			max_height = mid;
+			low = mid + 1;
+
+		}
+		else {
+
+			high = mid - 1;
+
+		}
+	}
+	
+	cout << max_height << endl;
+
+}
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	solve();
+	return 0;
+
+}
