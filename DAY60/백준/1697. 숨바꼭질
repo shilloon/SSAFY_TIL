@@ -1,0 +1,74 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <queue>
+
+using namespace std;
+
+int N, K;
+int t[100001];
+bool visited[100001];
+
+void bfs(int start) {
+
+	queue<int> q;
+
+	q.push(start);
+	visited[start] = true;
+	t[start] = 0;
+
+	while (!q.empty()) {
+
+		int v = q.front();
+		q.pop();
+
+		if (v == K) {
+
+			break;
+
+		}
+
+		int w = v + 1;
+		int s = v - 1;
+		int tel = v * 2;
+
+		if(w <= 100000 && !visited[w]) {
+
+			q.push(w);
+			visited[w] = true;
+			t[w] = t[v] + 1;
+
+		}
+		if (s >= 0 && !visited[s]) {
+
+			q.push(s);
+			visited[s] = true;
+			t[s] = t[v] + 1;
+
+		}
+		if (tel <= 100000 && !visited[tel]) {
+
+			q.push(tel);
+			visited[tel] = true;
+			t[tel] = t[v] + 1;
+
+		}
+	}
+
+}
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	cin >> N >> K;
+
+	bfs(N);
+
+	cout << t[K] << endl;
+
+	return 0;
+
+}
