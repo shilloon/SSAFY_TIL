@@ -1,0 +1,97 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <utility>
+
+using namespace std;
+
+int N, M;
+vector<vector<int>> map_matrix;
+int matrix[1001][1001] = { 0 };
+vector<vector<bool>> visited;
+
+void bfs(int sr, int sc) {
+
+	int dr[4] = {-1, 1, 0, 0};
+	int dc[4] = {0, 0, -1, 1};
+
+	queue<pair<int, int>> q;
+	q.push({ sr, sc });
+	visited[sr][sc] = true;
+
+	while (!q.empty()) {
+
+		pair<int, int> cur_loc = q.front();
+		q.pop();
+
+		int cur_r = cur_loc.first;
+		int cur_c = cur_loc.second;
+
+		for (int i = 0; i < 4; i++) {
+
+			int nxt_r = cur_r + dr[i];
+			int nxt_c = cur_c + dc[i];
+
+			if (nxt_r < 0 || nxt_c < 0 || nxt_r >= N || nxt_c >= M) continue;
+
+			if (visited[nxt_r][nxt_c]) continue;
+
+			if (map_matrix[nxt_r][nxt_c] == 0) continue;
+
+			q.push({ nxt_r, nxt_c });
+			visited[nxt_r][nxt_c] = true;
+			matrix[nxt_r][nxt_c] = matrix[cur_r][cur_c] + 1;
+
+		}
+
+	}
+
+}
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int start_r, start_c;
+
+	cin >> N >> M;
+
+	map_matrix.resize(N, vector<int>(M));
+	visited.resize(N, vector<bool>(M, false));
+	for (int r = 0; r < N; r++) {
+
+		for (int c = 0; c < M; c++) {
+
+			cin >> map_matrix[r][c];
+
+			if (map_matrix[r][c] == 2) {
+
+				start_r = r, start_c = c;
+
+			}
+			else if (map_matrix[r][c] == 1) {
+
+				matrix[r][c] = -1;
+
+			}
+		}
+
+	}
+
+	bfs(start_r, start_c);
+
+	for (int r = 0; r < N; r++) {
+
+		for (int c = 0; c < M; c++) {
+
+			cout << matrix[r][c] << " ";
+
+		}
+		cout << "\n";
+	}
+
+	return 0;
+
+}
