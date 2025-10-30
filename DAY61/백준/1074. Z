@@ -1,0 +1,44 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int N, r, c;
+int result = 0;
+
+void find_Z(int x, int y, int size) {
+
+	if (c == x && r == y) {
+
+		cout << result;
+		return;
+
+	}
+	else if (c < x + size && r < y + size && c >= x && r >= y) {
+
+		find_Z(x, y, size / 2);
+		find_Z(x + size / 2, y, size / 2);
+		find_Z(x, y + size / 2, size / 2);
+		find_Z(x + size / 2, y + size / 2, size / 2);
+
+	}
+	else {
+
+		result += size * size;
+
+	}
+}
+
+int main()
+{
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	cin >> N >> r >> c;
+
+	find_Z(0, 0, pow(2, N));
+	
+	return 0;
+}
